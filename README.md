@@ -1,5 +1,7 @@
 # SpigotMC Maven Plugin
 
+[![Build Status](https://travis-ci.org/jaxzin/spigotmc-maven-plugin.svg?branch=master)](https://travis-ci.org/jaxzin/spigotmc-maven-plugin)
+
 A Maven Plugin for running a SpigotMC server.
 The main use case is integration testing Bukkit/Spigot plugins.
 
