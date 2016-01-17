@@ -1,19 +1,15 @@
 package com.jaxzin.spigotmc.maven;
 
-import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.bukkit.craftbukkit.Main;
-import org.bukkit.craftbukkit.libs.joptsimple.OptionException;
-import org.bukkit.craftbukkit.libs.joptsimple.OptionParser;
-import org.bukkit.craftbukkit.libs.joptsimple.OptionSet;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.io.File;
+import java.io.PrintWriter;
+
+import static java.lang.Thread.sleep;
 
 /**
  *  <p>
@@ -33,18 +29,32 @@ import java.util.Arrays;
     executionStrategy = "phase='validate'"
 )
 public class SpigotStartMojo extends AbstractMojo {
+
+    static protected Process spigotProcess;
+
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info("Starting Spigot...");
         try {
-//            Main.main(new String[]{});
+            // Create the working dir for spigot to run
+            File spigotWorkingDir = new File("target/it/spigotmc");
+            spigotWorkingDir.mkdirs();
+
+            // Accept the EULA so Spigot will run
+            File eulaFile = new File(spigotWorkingDir, "eula.txt");
+            PrintWriter out = new PrintWriter(eulaFile);
+            out.println("eula=true");
+            out.close();
+
             // TODO: Get the spigot jar in a less fragile way (ex. copy into local dir with dependency plugin)
             String[] args = {"/bin/bash", "-c", "java -jar ~/.m2/repository/org/spigotmc/spigot/1.8.8/spigot-1.8.8.jar"};
-            Process process =
+            spigotProcess =
                 new ProcessBuilder(args)
-                    .redirectErrorStream(true)
+                        .directory(spigotWorkingDir)
+                        .redirectErrorStream(true)
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                     .start();
-            process.waitFor();
+            // TODO: A better waitFor condition, rather than waiting 15 seconds. Watch output for "Done"
+            sleep(15000);
         } catch (Throwable t) {
             throw new MojoFailureException("Unable to start Spigot server.", t);
         }

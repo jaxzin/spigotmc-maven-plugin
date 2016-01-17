@@ -13,7 +13,13 @@ import org.bukkit.Bukkit;
 public class SpigotStopMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info("Shutting down Spigot...");
-        Bukkit.shutdown();
+        SpigotStartMojo.spigotProcess.destroy();
+        try {
+            SpigotStartMojo.spigotProcess.waitFor();
+        } catch (InterruptedException e) {
+            throw new MojoFailureException("Interrupted while waiting for Spigot to stop.", e);
+        }
+        SpigotStartMojo.spigotProcess = null;
         getLog().info("Shut down Spigot.");
     }
 }
