@@ -4,6 +4,7 @@
 	<groupId>com.jaxzin.spigotmc</groupId>
 	<artifactId>spigotmc-maven-plugin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
 
 	<name>SpigotMC Maven Plugin</name>
 	<url>https://github.com/jaxzin/spigotmc-maven-plugin/wiki</url>
@@ -22,6 +23,20 @@
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
 			<version>1.8.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0</version>
+		</dependency>
+
+		<!-- dependencies to annotations -->
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>3.4</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
