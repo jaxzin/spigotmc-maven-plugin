@@ -19,15 +19,8 @@
                 <executions>
                     <execution>
                         <id>start-server</id>
-                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop-server</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
                             <goal>stop</goal>
                         </goals>
                     </execution>

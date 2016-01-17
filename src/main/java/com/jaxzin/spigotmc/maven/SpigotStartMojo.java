@@ -3,6 +3,7 @@ package com.jaxzin.spigotmc.maven;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
@@ -13,7 +14,7 @@ import static java.lang.Thread.sleep;
 
 /**
  *  <p>
- *  This goal is similar to the spigot:run goal, EXCEPT that it is designed to be bound to an execution inside your pom, rather
+ *  This goal is similar to the spigotmc:run goal, EXCEPT that it is designed to be bound to an execution inside your pom, rather
  *  than being run from the command line.
  *  </p>
  *  <p>
@@ -25,6 +26,7 @@ import static java.lang.Thread.sleep;
  */
 @Mojo(
     name = "start",
+    defaultPhase = LifecyclePhase.PRE_INTEGRATION_TEST,
     requiresDependencyResolution = ResolutionScope.TEST,
     executionStrategy = "phase='validate'"
 )
