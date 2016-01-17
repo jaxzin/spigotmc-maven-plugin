@@ -10,6 +10,12 @@
 	<url>https://github.com/jaxzin/spigotmc-maven-plugin/wiki</url>
 	<description>.</description>
 
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
