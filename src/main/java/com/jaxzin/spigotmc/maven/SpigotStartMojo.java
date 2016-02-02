@@ -48,7 +48,12 @@ public class SpigotStartMojo extends AbstractMojo {
             out.close();
 
             // TODO: Get the spigot jar in a less fragile way (ex. copy into local dir with dependency plugin)
-            String[] args = {"/bin/bash", "-c", "java -jar ~/.m2/repository/org/spigotmc/spigot/1.8.8/spigot-1.8.8.jar"};
+            final String[] args;
+            if(System.getProperty("os.name").contains("Windows")) {
+                args = new String[]{"cmd.exe", "/C", "java -jar %HOME%/.m2/repository/org/spigotmc/spigot/1.8.8/spigot-1.8.8.jar"};
+            } else {
+                args = new String[]{"/bin/bash", "-c", "java -jar ~/.m2/repository/org/spigotmc/spigot/1.8.8/spigot-1.8.8.jar"};
+            };
             spigotProcess =
                 new ProcessBuilder(args)
                         .directory(spigotWorkingDir)

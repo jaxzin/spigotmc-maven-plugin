@@ -6,6 +6,9 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 /**
  * SpigotStopMojo - stops a running instance of spigot.
  */
@@ -16,8 +19,12 @@ import org.apache.maven.plugins.annotations.Mojo;
 public class SpigotStopMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info("Shutting down Spigot...");
-        SpigotStartMojo.spigotProcess.destroy();
         try {
+            final OutputStreamWriter out = new OutputStreamWriter(SpigotStartMojo.spigotProcess.getOutputStream());
+            PrintWriter writer = new PrintWriter(out);
+            writer.println("stop");
+            writer.flush();
+            writer.close();
             SpigotStartMojo.spigotProcess.waitFor();
         } catch (InterruptedException e) {
             throw new MojoFailureException("Interrupted while waiting for Spigot to stop.", e);

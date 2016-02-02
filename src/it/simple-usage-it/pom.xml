@@ -7,11 +7,21 @@
 
     <name>SpigotMC Maven Plugin Integration Test</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.8</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
         <plugins>
+            <!-- Start and Stop a SpigotMC server automatically before and after the integration-test phase. -->
             <plugin>
                 <groupId>com.jaxzin.spigotmc.maven</groupId>
                 <artifactId>spigotmc-maven-plugin</artifactId>
@@ -21,7 +31,29 @@
                         <id>start-server</id>
                         <goals>
                             <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <goals>
                             <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Use failsafe to trigger integration tests under src/it/java -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <testSourceDirectory>${basedir}src/it/java</testSourceDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
