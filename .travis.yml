@@ -2,5 +2,5 @@
 language: java
 jdk: oraclejdk7
 
-install: mvn install -DskipTests=true -DskipITs=true
+install: mvn install -DskipTests=true -DskipITs=true -Dinvoker.skip=true
 script: mvn verify
