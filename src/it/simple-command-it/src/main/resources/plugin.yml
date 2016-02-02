@@ -1,0 +1,9 @@
+name: ping
+version: 0.0.1
+author: self
+main: com.jaxzin.spigotmc.ping.Main
+
+commands:
+  ping:
+    description: A simple test that the server is alive.
+    usage: /ping
